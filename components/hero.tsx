@@ -56,7 +56,7 @@ export function HeroSection() {
                     className="flex flex-col sm:flex-row gap-4 justify-center"
                 >
                     <Link
-                        href="/upscale-tool"
+                        href="/audit"
                         className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-charcoal-900 transition-all duration-200 bg-electric-400 rounded-lg hover:bg-electric-300 hover:shadow-[0_0_30px_rgba(34,211,238,0.5)] focus:ring-2 focus:ring-offset-2 focus:ring-electric-400 focus:outline-hidden"
                     >
                         Launch Your Upscale Audit
