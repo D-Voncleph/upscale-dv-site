@@ -46,7 +46,7 @@ export async function POST(req: Request) {
             messages: convertToModelMessages(messages),
         });
 
-        return result.toDataStreamResponse();
+        return result.toTextStreamResponse();
     } catch (error) {
         console.error("UPSCALE_AI_ERROR:", error);
         return new Response("Internal Server Error", { status: 500 });
