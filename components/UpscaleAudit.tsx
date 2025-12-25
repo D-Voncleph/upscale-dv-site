@@ -9,7 +9,7 @@ export default function UpscaleAudit() {
     const [input, setInput] = useState('');
     const { messages, sendMessage, isLoading, error, reload } = useChat({
         api: '/api/chat',
-        onError: (e) => {
+        onError: (e: Error) => {
             console.error("Chat Error:", e);
         }
     } as any) as any;
