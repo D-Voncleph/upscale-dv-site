@@ -4,13 +4,52 @@ import { motion } from "framer-motion";
 import { ArrowRight, Beaker, Zap, Target, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
-const products = [
+// TypeScript interface for product status
+type ProductStatus = "Live" | "In Development" | "Internal";
+
+interface StatusConfig {
+    label: ProductStatus;
+    colorClass: string;
+    glowClass: string;
+    animation: string;
+}
+
+const statusConfig: Record<ProductStatus, StatusConfig> = {
+    "Live": {
+        label: "Live",
+        colorClass: "bg-emerald-500/20 text-emerald-400",
+        glowClass: "shadow-[0_0_20px_rgba(16,185,129,0.3)]",
+        animation: "animate-pulse",
+    },
+    "In Development": {
+        label: "In Development",
+        colorClass: "bg-zinc-500/20 text-zinc-400",
+        glowClass: "shadow-[0_0_20px_rgba(161,170,175,0.2)]",
+        animation: "animate-pulse",
+    },
+    "Internal": {
+        label: "Internal",
+        colorClass: "bg-blue-500/20 text-blue-400",
+        glowClass: "shadow-[0_0_20px_rgba(59,130,246,0.3)]",
+        animation: "",
+    },
+};
+
+interface Product {
+    title: string;
+    description: string;
+    icon: React.ComponentType<{ className?: string }>;
+    status: ProductStatus;
+    href: string;
+    size: string;
+}
+
+const products: Product[] = [
     {
         title: "EEC Onboarding App",
         description: "B2B SaaS solution for Whop creators. Streamline onboarding, automate workflows, and scale your creator business.",
         icon: Target,
         status: "Live",
-        statusColor: "bg-emerald-500/20 text-emerald-400",
         href: "#",
         size: "col-span-12 md:col-span-8",
     },
@@ -19,7 +58,6 @@ const products = [
         description: "Our offensive motivational tool. AI-powered accountability coaching that keeps you on track.",
         icon: Zap,
         status: "In Development",
-        statusColor: "bg-yellow-500/20 text-yellow-400",
         href: "#",
         size: "col-span-12 md:col-span-4",
     },
@@ -28,7 +66,6 @@ const products = [
         description: "The AI-powered diagnostic platform you're using right now. Identify bottlenecks and get actionable strategies.",
         icon: Beaker,
         status: "Live",
-        statusColor: "bg-emerald-500/20 text-emerald-400",
         href: "/audit",
         size: "col-span-12 md:col-span-6",
     },
@@ -37,7 +74,6 @@ const products = [
         description: "Internal systems and automation frameworks that power our consulting practice.",
         icon: Target,
         status: "Internal",
-        statusColor: "bg-blue-500/20 text-blue-400",
         href: "#",
         size: "col-span-12 md:col-span-6",
     },
@@ -103,9 +139,9 @@ export default function LabsPage() {
                                             <product.icon className="w-6 h-6 text-emerald-400" />
                                         </div>
                                         <span
-                                            className={`px-3 py-1 rounded-full text-xs font-medium ${product.statusColor}`}
+                                            className={`px-3 py-1 rounded-full text-xs font-medium ${statusConfig[product.status].colorClass} ${statusConfig[product.status].glowClass} ${statusConfig[product.status].animation}`}
                                         >
-                                            {product.status}
+                                            {statusConfig[product.status].label}
                                         </span>
                                     </div>
 

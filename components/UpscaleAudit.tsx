@@ -40,9 +40,9 @@ export default function UpscaleAudit() {
                 <button
                     onClick={handleRestart}
                     className="flex items-center gap-2 px-3 py-1.5 text-xs text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/50 rounded-lg transition-all"
-                    title="Restart Audit"
+                    aria-label="Restart Audit"
                 >
-                    <RotateCcw size={14} />
+                    <RotateCcw size={14} aria-hidden="true" />
                     <span>Restart</span>
                 </button>
             </div>
@@ -142,8 +142,13 @@ export default function UpscaleAudit() {
                     type="submit"
                     disabled={isLoading || !input.trim()}
                     className="bg-emerald-600 hover:bg-emerald-500 text-white p-3 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    aria-label={isLoading ? "Generating response" : "Send Message"}
                 >
-                    {isLoading ? <Sparkles className="animate-spin" size={18} /> : <Send size={18} />}
+                    {isLoading ? (
+                        <Sparkles className="animate-spin" size={18} aria-hidden="true" />
+                    ) : (
+                        <Send size={18} aria-hidden="true" />
+                    )}
                 </button>
             </form>
         </div>

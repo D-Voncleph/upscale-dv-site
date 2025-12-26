@@ -50,9 +50,10 @@ export function Wizard() {
                                     setStep(1);
                                 }}
                                 className="group p-8 rounded-2xl glass-panel border-transparent hover:border-electric-400/50 transition-all text-left"
+                                aria-label="Select Individual path for personal growth"
                             >
                                 <div className="w-12 h-12 bg-electric-400/10 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                                    <User className="w-6 h-6 text-electric-400" />
+                                    <User className="w-6 h-6 text-electric-400" aria-hidden="true" />
                                 </div>
                                 <h3 className="text-xl font-bold mb-2">Myself</h3>
                                 <p className="text-gray-400 text-sm">Professional or Individual Growth</p>
@@ -64,9 +65,10 @@ export function Wizard() {
                                     setStep(1);
                                 }}
                                 className="group p-8 rounded-2xl glass-panel border-transparent hover:border-electric-400/50 transition-all text-left"
+                                aria-label="Select Organization path for business growth"
                             >
                                 <div className="w-12 h-12 bg-electric-blue/10 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                                    <Building2 className="w-6 h-6 text-electric-blue" />
+                                    <Building2 className="w-6 h-6 text-electric-blue" aria-hidden="true" />
                                 </div>
                                 <h3 className="text-xl font-bold mb-2">My Organization</h3>
                                 <p className="text-gray-400 text-sm">SME or Enterprise Efficiency</p>
@@ -246,9 +248,10 @@ function InputStep({ question, placeholder, value, onChange, onNext }: { questio
                 <button
                     onClick={onNext}
                     disabled={!value}
-                    className="w-full py-4 bg-electric-400 text-charcoal-900 font-bold rounded-xl hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full py-4 bg-electric-400 text-charcoal-900 font-bold rounded-xl hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                     Continue
+                    <ArrowRight className="w-5 h-5" aria-hidden="true" />
                 </button>
             </div>
         </div>

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 const navItems = [
@@ -11,6 +12,7 @@ const navItems = [
     { href: "/services", label: "Services" },
     { href: "/labs", label: "Labs" },
     { href: "/manifesto", label: "Manifesto" },
+    { href: "/contact", label: "Contact" },
     { href: "/audit", label: "Audit", isCta: true },
 ];
 
@@ -56,8 +58,13 @@ export function Navigation() {
                     <div className="flex items-center justify-between">
                         {/* Logo */}
                         <Link href="/" className="flex items-center gap-2 group">
-                            <div className="w-10 h-10 bg-gradient-to-br from-electric-400 to-electric-600 rounded-lg flex items-center justify-center group-hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-shadow">
-                                <span className="text-charcoal-900 font-bold text-xl">U</span>
+                            <div className="relative w-10 h-10">
+                                <Image
+                                    src="/logo.png"
+                                    alt="UPSCALE DV Logo"
+                                    fill
+                                    className="object-contain"
+                                />
                             </div>
                             <span className="font-bold text-xl tracking-tight">
                                 UPSCALE<span className="text-electric-400">DV</span>
