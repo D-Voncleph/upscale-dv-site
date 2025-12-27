@@ -1,22 +1,93 @@
 'use client';
 
-import { useChat } from '@ai-sdk/react';
 import { Bot, User, Sparkles, Send, RotateCcw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+
+// n8n Webhook URL
+const N8N_WEBHOOK_URL = 'https://upscaledv.app.n8n.cloud/webhook/upscale-dv-audit';
+
+interface Message {
+    id: string;
+    role: 'user' | 'assistant';
+    content: string;
+    createdAt: Date;
+}
 
 export default function UpscaleAudit() {
     const [input, setInput] = useState('');
-    const { messages, sendMessage, isLoading, error, reload } = useChat({
-        api: '/api/chat',
-        onError: (e: Error) => {
-            console.error("Chat Error:", e);
+    const [messages, setMessages] = useState<Message[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const messagesEndRef = useRef<HTMLDivElement>(null);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
+
+    const handleSendMessage = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!input.trim() || isLoading) return;
+
+        const userMessage: Message = {
+            id: Date.now().toString(),
+            role: 'user',
+            content: input,
+            createdAt: new Date(),
+        };
+
+        setMessages((prev) => [...prev, userMessage]);
+        setInput('');
+        setIsLoading(true);
+        setError(null);
+
+        try {
+            const response = await fetch(N8N_WEBHOOK_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    message: input,
+                    history: messages.map(m => ({
+                        role: m.role,
+                        content: m.content,
+                    })),
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Connection issue. Please try again.');
+            }
+
+            const data = await response.json();
+
+            // Extract aiResponse from n8n response
+            const aiResponseText = data.aiResponse || data.response || data.message || 'No response received.';
+
+            const assistantMessage: Message = {
+                id: (Date.now() + 1).toString(),
+                role: 'assistant',
+                content: aiResponseText,
+                createdAt: new Date(),
+            };
+
+            setMessages((prev) => [...prev, assistantMessage]);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Connection issue. Please try again.');
+        } finally {
+            setIsLoading(false);
         }
-    } as any) as any;
+    };
 
     const handleRestart = () => {
         if (confirm('Are you sure you want to restart the audit? This will clear all messages.')) {
-            reload();
+            setMessages([]);
+            setError(null);
             setInput('');
         }
     };
@@ -51,12 +122,12 @@ export default function UpscaleAudit() {
             <div className="h-[500px] overflow-y-auto p-6 space-y-6 scrollbar-hide">
                 {error && (
                     <div className="bg-red-500/10 border border-red-500/50 text-red-400 p-4 rounded-xl text-sm">
-                        Connection Error. Please ensure your GOOGLE_GENERATED_API_KEY is set in Vercel.
+                        {error}
                     </div>
                 )}
 
                 <AnimatePresence>
-                    {messages.map((m: any) => (
+                    {messages.map((m) => (
                         <motion.div
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -74,22 +145,10 @@ export default function UpscaleAudit() {
                                         ? 'bg-zinc-900 text-zinc-100 rounded-tr-none'
                                         : 'bg-zinc-800/40 text-zinc-300 rounded-tl-none border border-zinc-700/50'
                                         }`}>
-                                        {/* Handle message parts */}
-                                        {m.parts ? (
-                                            m.parts.map((part: any, i: number) => {
-                                                if (part.type === 'text') {
-                                                    return <span key={i}>{part.text}</span>;
-                                                }
-                                                return null;
-                                            })
-                                        ) : (
-                                            // Fallback for old message format
-                                            <span>{m.content}</span>
-                                        )}
+                                        {m.content}
                                     </div>
-                                    {/* Timestamp */}
                                     <div className={`text-[10px] text-zinc-600 px-2 ${m.role === 'user' ? 'text-right' : 'text-left'}`}>
-                                        {m.createdAt ? formatTime(new Date(m.createdAt)) : ''}
+                                        {formatTime(m.createdAt)}
                                     </div>
                                 </div>
                             </div>
@@ -118,17 +177,12 @@ export default function UpscaleAudit() {
                         </div>
                     </motion.div>
                 )}
+                <div ref={messagesEndRef} />
             </div>
 
             {/* Input Area */}
             <form
-                onSubmit={(e) => {
-                    e.preventDefault();
-                    if (input.trim() && !isLoading) {
-                        sendMessage({ text: input });
-                        setInput('');
-                    }
-                }}
+                onSubmit={handleSendMessage}
                 className="p-4 bg-black/60 border-t border-zinc-800 flex gap-2"
             >
                 <input
