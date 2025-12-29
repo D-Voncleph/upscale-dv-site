@@ -52,7 +52,7 @@ export default function UpscaleAudit() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    message: input,
+                    userMessage: input,
                     history: messages.map(m => ({
                         role: m.role,
                         content: m.content,
@@ -66,8 +66,8 @@ export default function UpscaleAudit() {
 
             const data = await response.json();
 
-            // Extract aiResponse from n8n response
-            const aiResponseText = data.aiResponse || data.response || data.message || 'No response received.';
+            // Extract AI response from n8n (LangChain agents return output in different formats)
+            const aiResponseText = data.text || data.output || data.response || data.aiResponse || data.message || 'No response received.';
 
             const assistantMessage: Message = {
                 id: (Date.now() + 1).toString(),
