@@ -29,6 +29,8 @@ export default function UpscaleAudit() {
         scrollToBottom();
     }, [messages]);
 
+    const [sessionId] = useState(() => `audit-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`);
+
     const handleSendMessage = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!input.trim() || isLoading) return;
@@ -53,6 +55,7 @@ export default function UpscaleAudit() {
                 },
                 body: JSON.stringify({
                     userMessage: input,
+                    sessionId: sessionId,
                     history: messages.map(m => ({
                         role: m.role,
                         content: m.content,
