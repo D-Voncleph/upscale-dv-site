@@ -2,15 +2,13 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowUpRight, Linkedin, Twitter, Github } from "lucide-react";
+import { ArrowUpRight, Linkedin } from "lucide-react";
 
 const footerLinks = {
     brand: {
         description: "Engineering the infrastructure of growth.",
         social: [
-            { icon: Linkedin, href: "#", label: "LinkedIn" },
-            { icon: Twitter, href: "#", label: "Twitter" },
-            { icon: Github, href: "#", label: "GitHub" },
+            { icon: Linkedin, href: "https://linkedin.com/company/upscaledv", label: "LinkedIn" },
         ],
     },
     services: [

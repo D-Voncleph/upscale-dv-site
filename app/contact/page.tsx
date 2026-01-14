@@ -16,8 +16,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-// n8n Webhook URL
-const N8N_WEBHOOK_URL = "https://upscaledv.app.n8n.cloud/webhook/upscale-dv-contact";
+// n8n Webhook URL (Hostinger)
+const N8N_WEBHOOK_URL = "https://n8n.srv1270098.hstgr.cloud/webhook/upscale-dv-contact";
 
 // Form validation schema
 const contactFormSchema = z.object({

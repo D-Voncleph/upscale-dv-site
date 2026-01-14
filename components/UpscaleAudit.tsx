@@ -4,8 +4,8 @@ import { Bot, User, Sparkles, Send, RotateCcw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useRef, useEffect } from 'react';
 
-// n8n Webhook URL
-const N8N_WEBHOOK_URL = 'https://upscaledv.app.n8n.cloud/webhook/upscale-dv-audit';
+// n8n Webhook URL (Hostinger)
+const N8N_WEBHOOK_URL = 'https://n8n.srv1270098.hstgr.cloud/webhook/upscale-dv-audit';
 
 interface Message {
     id: string;
