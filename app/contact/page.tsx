@@ -74,13 +74,18 @@ export default function ContactPage() {
         body: JSON.stringify(payload),
       });
 
+      console.log("Response status:", response.status);
+
       if (response.ok) {
         setSubmitState("success");
         reset();
       } else {
+        const errorText = await response.text();
+        console.error("Response error:", errorText);
         setSubmitState("error");
       }
-    } catch {
+    } catch (error) {
+      console.error("Fetch error:", error);
       setSubmitState("error");
     }
   };
