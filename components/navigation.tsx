@@ -51,7 +51,7 @@ export function Navigation() {
                 className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
                     isScrolled
                         ? "py-3 bg-charcoal-900/80 backdrop-blur-xl border-b border-white/5"
-                        : "py-5 bg-transparent"
+                        : "py-5 bg-gradient-to-b from-charcoal-900/90 to-transparent"
                 }`}
             >
                 <div className="max-w-7xl mx-auto px-6">
@@ -165,7 +165,7 @@ export function Navigation() {
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: "100%" }}
                         transition={{ type: "spring", damping: 25 }}
-                        className="fixed inset-0 z-40 lg:hidden bg-charcoal-900 pt-24 px-6"
+                        className="fixed inset-0 z-50 lg:hidden bg-charcoal-900/95 backdrop-blur-xl pt-24 px-6"
                     >
                         <div className="flex flex-col gap-4">
                             {navItems.map((item) =>

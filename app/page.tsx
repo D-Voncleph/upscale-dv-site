@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, Zap, Shield, Globe, Beaker, ChevronDown } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
+import { ArrowRight, Sparkles, Zap, Shield, Globe, Beaker, ChevronDown, MousePointer2, Layout, CreditCard, BarChart } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
@@ -19,6 +20,9 @@ export default function Home() {
             {/* Three Pillars */}
             <PillarsSection />
 
+            {/* Landing Page Templates Showcase */}
+            <LandingPagesSection />
+
             {/* CTA Section */}
             <CTASection />
         </div>
@@ -26,69 +30,141 @@ export default function Home() {
 }
 
 function HeroSection() {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+    const springConfig = { stiffness: 400, damping: 40 };
+    const springX = useSpring(mouseX, springConfig);
+    const springY = useSpring(mouseY, springConfig);
+
+    useEffect(() => {
+        const handleMouseMove = (e: MouseEvent) => {
+            if (containerRef.current) {
+                const rect = containerRef.current.getBoundingClientRect();
+                mouseX.set(e.clientX - rect.left - rect.width / 2);
+                mouseY.set(e.clientY - rect.top - rect.height / 2);
+            }
+        };
+
+        const container = containerRef.current;
+        container?.addEventListener("mousemove", handleMouseMove);
+        return () => {
+            container?.removeEventListener("mousemove", handleMouseMove);
+        };
+    }, [mouseX, mouseY]);
+
+    const heroVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.12,
+                delayChildren: 0.1
+            }
+        }
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: 30 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                type: "spring",
+                stiffness: 100,
+                damping: 20
+            }
+        }
+    };
+
     return (
-        <section className="relative min-h-[90vh] flex items-center justify-center px-6 overflow-hidden">
+        <section ref={containerRef} className="relative min-h-[90vh] flex items-center justify-center px-6 overflow-hidden">
+            {/* Mouse-follow spotlight effect */}
+            <motion.div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                    background: `radial-gradient(600px circle at ${springX}px ${springY}px, rgba(16,185,129,0.08), transparent 40%)`,
+                }}
+            />
+
+            {/* Animated background orbs */}
+            <motion.div
+                animate={{
+                    x: [0, 30, 0],
+                    y: [0, -20, 0],
+                }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-[100px]"
+            />
+            <motion.div
+                animate={{
+                    x: [0, -40, 0],
+                    y: [0, 30, 0],
+                }}
+                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-cyan-500/8 rounded-full blur-[120px]"
+            />
+
             <div className="max-w-5xl mx-auto text-center z-10">
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 mb-8"
+                    variants={heroVariants}
+                    initial="hidden"
+                    animate="visible"
                 >
-                    <Sparkles className="w-4 h-4 text-emerald-400" />
-                    <span className="text-sm font-medium text-emerald-400">
-                        Engineering Business Systems
-                    </span>
-                </motion.div>
+                    <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 mb-8">
+                        <Sparkles className="w-4 h-4 text-emerald-400" />
+                        <span className="text-sm font-medium text-emerald-400">
+                            Engineering Business Systems
+                        </span>
+                    </motion.div>
 
-                <motion.h1
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.1 }}
-                    className="heading-display mb-8 tracking-tight"
-                >
-                    Growth isn&apos;t a goal. <br />
-                    <span className="text-gradient">It&apos;s infrastructure.</span>
-                </motion.h1>
-
-                <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className="text-xl md:text-2xl text-zinc-400 max-w-3xl mx-auto mb-12 leading-relaxed"
-                >
-                    We engineer human-centric systems and AI-driven strategies that turn
-                    bottlenecks into breakthroughs. For enterprises and SMEs who refuse
-                    to compromise.
-                </motion.p>
-
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.3 }}
-                    className="flex flex-col sm:flex-row gap-4 justify-center"
-                >
-                    <Link
-                        href="/audit"
-                        className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-emerald-500 text-zinc-950 font-bold rounded-xl hover:bg-emerald-400 transition-all hover:shadow-[0_0_40px_rgba(16,185,129,0.4)]"
+                    <motion.h1
+                        variants={itemVariants}
+                        className="heading-display mb-8 tracking-tight"
                     >
-                        Start Your Audit
-                        <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                    </Link>
+                        Growth isn&apos;t a goal. <br />
+                        <span className="text-gradient">It&apos;s infrastructure.</span>
+                    </motion.h1>
 
-                    <Link
-                        href="/services"
-                        className="inline-flex items-center justify-center gap-2 px-8 py-4 glass rounded-xl font-semibold hover:glass-hover transition-all"
+                    <motion.p
+                        variants={itemVariants}
+                        className="text-xl md:text-2xl text-zinc-400 max-w-3xl mx-auto mb-12 leading-relaxed"
                     >
-                        Explore Services
-                    </Link>
+                        We engineer human-centric systems and AI-driven strategies that turn
+                        bottlenecks into breakthroughs. For enterprises and SMEs who refuse
+                        to compromise.
+                    </motion.p>
+
+                    <motion.div
+                        variants={itemVariants}
+                        className="flex flex-col sm:flex-row gap-4 justify-center"
+                    >
+                        <Link
+                            href="/audit"
+                            className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 bg-emerald-500 text-zinc-950 font-bold rounded-xl overflow-hidden"
+                        >
+                            {/* Button glow effect */}
+                            <motion.div
+                                className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-cyan-400 opacity-0 group-hover:opacity-20 transition-opacity"
+                            />
+                            <span className="relative z-10">Start Your Audit</span>
+                            <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1 relative z-10" />
+                        </Link>
+
+                        <Link
+                            href="/services"
+                            className="inline-flex items-center justify-center gap-2 px-8 py-4 glass rounded-xl font-semibold hover:glass-hover transition-all"
+                        >
+                            Explore Services
+                        </Link>
+                    </motion.div>
                 </motion.div>
             </div>
 
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.8, duration: 1 }}
+                transition={{ delay: 1, duration: 1 }}
                 className="absolute bottom-10 left-1/2 -translate-x-1/2"
             >
                 <ChevronDown className="w-6 h-6 text-zinc-600 animate-bounce" />
@@ -300,6 +376,210 @@ function PillarsSection() {
                         </motion.div>
                     ))}
                 </div>
+            </div>
+        </section>
+    );
+}
+
+function LandingPagesSection() {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+    const springConfig = { stiffness: 300, damping: 30 };
+    const springX = useSpring(mouseX, springConfig);
+    const springY = useSpring(mouseY, springConfig);
+
+    useEffect(() => {
+        const handleMouseMove = (e: MouseEvent) => {
+            if (containerRef.current) {
+                const rect = containerRef.current.getBoundingClientRect();
+                mouseX.set(e.clientX - rect.left);
+                mouseY.set(e.clientY - rect.top);
+            }
+        };
+
+        const container = containerRef.current;
+        container?.addEventListener("mousemove", handleMouseMove);
+        return () => {
+            container?.removeEventListener("mousemove", handleMouseMove);
+        };
+    }, [mouseX, mouseY]);
+
+    const [activeDemo, setActiveDemo] = useState<string | null>(null);
+
+    const demos = [
+        {
+            id: "hero",
+            title: "Animated Hero",
+            description: "Staggered reveals, particle effects, gradient text",
+            icon: Layout,
+            color: "from-emerald-500/20 to-cyan-500/20",
+        },
+        {
+            id: "features",
+            title: "Feature Showcase",
+            description: "Hover cards, 3D tilt, scroll reveals",
+            icon: Sparkles,
+            color: "from-purple-500/20 to-pink-500/20",
+        },
+        {
+            id: "pricing",
+            title: "Pricing Tables",
+            description: "Interactive toggles, glow effects, gradients",
+            icon: CreditCard,
+            color: "from-amber-500/20 to-orange-500/20",
+        },
+        {
+            id: "analytics",
+            title: "Data Dashboards",
+            description: "Real-time charts, live counters, progress bars",
+            icon: BarChart,
+            color: "from-blue-500/20 to-indigo-500/20",
+        },
+    ];
+
+    return (
+        <section className="section-py px-6 relative overflow-hidden">
+            {/* Animated background */}
+            <div className="absolute inset-0 bg-mesh -z-10" />
+            <div className="absolute inset-0 bg-grid-pattern opacity-10 -z-10" />
+
+            <div className="max-w-5xl mx-auto">
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                    className="text-center mb-16"
+                >
+                    <span className="text-emerald-400 font-medium tracking-wider uppercase text-sm">
+                        Our Work
+                    </span>
+                    <h2 className="text-3xl md:text-5xl font-bold mt-4 mb-6">
+                        Landing Pages That <span className="text-gradient">Convert</span>
+                    </h2>
+                    <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
+                        Custom-designed landing pages with premium animations and interactions
+                        that capture attention and drive conversions.
+                    </p>
+                </motion.div>
+
+                {/* Interactive Demo Container */}
+                <motion.div
+                    ref={containerRef}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                    className="relative rounded-2xl overflow-hidden glass border border-white/10 cursor-crosshair"
+                    onMouseLeave={() => setActiveDemo(null)}
+                >
+                    {/* Mouse-follow gradient beam */}
+                    <motion.div
+                        className="absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300"
+                        style={{
+                            background: `radial-gradient(800px circle at ${springX}px ${springY}px, rgba(16,185,129,0.12), transparent 40%)`,
+                            opacity: activeDemo ? 1 : 0,
+                        }}
+                    />
+
+                    {/* Demo content */}
+                    <div className="p-8 md:p-12">
+                        {/* Mini landing page mockup */}
+                        <div className="relative bg-zinc-900/80 rounded-xl p-6 border border-white/5">
+                            {/* Mock browser header */}
+                            <div className="flex items-center gap-2 mb-6 pb-4 border-b border-white/5">
+                                <div className="w-3 h-3 rounded-full bg-red-500/50" />
+                                <div className="w-3 h-3 rounded-full bg-amber-500/50" />
+                                <div className="w-3 h-3 rounded-full bg-emerald-500/50" />
+                                <div className="ml-4 flex-1 bg-zinc-800 rounded-md px-3 py-1 text-xs text-zinc-500">
+                                    yourbrand.com
+                                </div>
+                            </div>
+
+                            {/* Mock content */}
+                            <div className="space-y-4">
+                                <motion.div
+                                    animate={activeDemo === "hero" ? { scale: 1.02, y: -5 } : { scale: 1, y: 0 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 rounded-lg p-4 border border-emerald-500/20"
+                                    onMouseEnter={() => setActiveDemo("hero")}
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <Layout className="w-5 h-5 text-emerald-400" />
+                                        <span className="text-sm text-zinc-300">Animated Hero Section</span>
+                                    </div>
+                                </motion.div>
+
+                                <div className="grid grid-cols-3 gap-3">
+                                    {demos.slice(1).map((demo, i) => (
+                                        <motion.div
+                                            key={demo.id}
+                                            animate={activeDemo === demo.id ? { scale: 1.02, y: -3 } : { scale: 1, y: 0 }}
+                                            transition={{ duration: 0.3, delay: i * 0.05 }}
+                                            className={`bg-gradient-to-br ${demo.color} rounded-lg p-3 border border-white/5 cursor-pointer`}
+                                            onMouseEnter={() => setActiveDemo(demo.id)}
+                                        >
+                                            <demo.icon className="w-4 h-4 text-zinc-300 mb-1" />
+                                            <span className="text-xs text-zinc-400">{demo.title}</span>
+                                        </motion.div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Hover info tooltip */}
+                        <AnimatePresence>
+                            {activeDemo && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: 10 }}
+                                    className="absolute bottom-6 right-6 bg-charcoal-900/95 backdrop-blur-xl rounded-xl p-4 border border-emerald-500/30 shadow-2xl"
+                                >
+                                    {(() => {
+                                        const demo = demos.find(d => d.id === activeDemo);
+                                        return demo ? (
+                                            <div className="flex items-start gap-3">
+                                                <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                                                    <demo.icon className="w-4 h-4 text-emerald-400" />
+                                                </div>
+                                                <div>
+                                                    <h4 className="font-semibold text-white">{demo.title}</h4>
+                                                    <p className="text-sm text-zinc-400">{demo.description}</p>
+                                                </div>
+                                            </div>
+                                        ) : null;
+                                    })()}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
+
+                    {/* Corner decorations */}
+                    <div className="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-emerald-500/10 to-transparent rounded-tr-2xl" />
+                    <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-emerald-500/10 to-transparent rounded-bl-2xl" />
+                </motion.div>
+
+                {/* CTA */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 }}
+                    className="text-center mt-10"
+                >
+                    <Link
+                        href="/contact"
+                        className="inline-flex items-center gap-2 px-8 py-4 bg-emerald-500 text-zinc-950 font-bold rounded-xl hover:bg-emerald-400 transition-all hover:shadow-[0_0_40px_rgba(16,185,129,0.4)]"
+                    >
+                        Get Your Custom Landing Page
+                        <ArrowRight className="w-5 h-5" />
+                    </Link>
+                    <p className="mt-4 text-zinc-500 text-sm">
+                        Free consultation included
+                    </p>
+                </motion.div>
             </div>
         </section>
     );
