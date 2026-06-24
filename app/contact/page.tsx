@@ -16,8 +16,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-// n8n Webhook URL (Hostinger)
-const N8N_WEBHOOK_URL = "https://n8n.srv1270098.hstgr.cloud/webhook/upscale-dv-contact";
+// n8n Webhook URL — now uses env var via server action, keeping client-side fallback for now
+const N8N_WEBHOOK_URL = process.env.NEXT_PUBLIC_N8N_CONTACT_WEBHOOK_URL || "https://n8n.srv1270098.hstgr.cloud/webhook/upscale-dv-contact";
 
 // Form validation schema
 const contactFormSchema = z.object({
@@ -32,9 +32,12 @@ const contactFormSchema = z.object({
     .url("Please enter a valid URL")
     .optional()
     .or(z.literal("")),
+  serviceNeeded: z.string().min(1, "Please select a service"),
+  budgetRange: z.string().min(1, "Please select a budget range"),
+  timeline: z.string().min(1, "Please select a timeline"),
   coreChallenge: z
     .string()
-    .min(50, "Please describe your challenge in at least 50 characters"),
+    .min(50, "Please describe your project in at least 50 characters"),
 });
 
 type ContactFormData = z.infer<typeof contactFormSchema>;
@@ -61,6 +64,9 @@ export default function ContactPage() {
       companyName: data.companyName,
       officialEmail: data.officialEmail,
       linkedinProfile: data.linkedinProfile || null,
+      serviceNeeded: data.serviceNeeded,
+      budgetRange: data.budgetRange,
+      timeline: data.timeline,
       coreChallenge: data.coreChallenge,
       submissionTimestamp: new Date().toISOString(),
     };
@@ -74,18 +80,15 @@ export default function ContactPage() {
         body: JSON.stringify(payload),
       });
 
-      console.log("Response status:", response.status);
 
       if (response.ok) {
         setSubmitState("success");
         reset();
       } else {
         const errorText = await response.text();
-        console.error("Response error:", errorText);
         setSubmitState("error");
       }
-    } catch (error) {
-      console.error("Fetch error:", error);
+    } catch {
       setSubmitState("error");
     }
   };
@@ -117,7 +120,7 @@ export default function ContactPage() {
             transition={{ delay: 0.1 }}
             className="heading-display mb-6"
           >
-            Let&apos;s Build Your Infrastructure
+            Let&apos;s Build Your Next Digital Product
           </motion.h1>
 
           <motion.p
@@ -126,7 +129,7 @@ export default function ContactPage() {
             transition={{ delay: 0.2 }}
             className="text-xl text-zinc-400 leading-relaxed max-w-2xl mx-auto"
           >
-            Tell us about your vision. We&apos;ll engineer the roadmap.
+            Tell us about your project. We&apos;ll show you how we can help.
           </motion.p>
         </div>
       </section>
@@ -154,7 +157,7 @@ export default function ContactPage() {
                 </div>
                 <h2 className="text-2xl font-bold mb-4">Message Received</h2>
                 <p className="text-zinc-400 mb-8 max-w-md mx-auto">
-                  Strategic roadmap initiated. Check your inbox for your assessment.
+                  We&apos;ll review your project details and get back to you within 24 hours.
                 </p>
                 <button
                   onClick={resetForm}
@@ -271,13 +274,13 @@ export default function ContactPage() {
                     className="flex items-center gap-2 text-sm font-medium text-zinc-300"
                   >
                     <Target className="w-4 h-4 text-emerald-400" />
-                    What is your current biggest bottleneck or goal?
+                    Tell us about your project
                   </label>
                   <textarea
                     id="coreChallenge"
                     {...register("coreChallenge")}
                     rows={4}
-                    placeholder="Describe your biggest challenge (minimum 50 characters)..."
+                    placeholder="Describe what you want to build (minimum 50 characters)..."
                     className="w-full bg-zinc-800/50 border border-zinc-700 rounded-xl px-4 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all resize-none"
                   />
                   {errors.coreChallenge && (
@@ -286,6 +289,90 @@ export default function ContactPage() {
                       {errors.coreChallenge.message}
                     </p>
                   )}
+                </div>
+
+                {/* Service Needed Dropdown */}
+                <div className="space-y-2">
+                  <label
+                    htmlFor="serviceNeeded"
+                    className="flex items-center gap-2 text-sm font-medium text-zinc-300"
+                  >
+                    <Sparkles className="w-4 h-4 text-emerald-400" />
+                    Service Needed
+                  </label>
+                  <select
+                    id="serviceNeeded"
+                    {...register("serviceNeeded")}
+                    className="w-full bg-zinc-800/50 border border-zinc-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
+                  >
+                    <option value="">Select a service...</option>
+                    <option value="web-development">Web Development</option>
+                    <option value="mobile-app">Mobile &amp; App Development</option>
+                    <option value="systems-architecture">Systems Architecture</option>
+                    <option value="not-sure">Not Sure Yet</option>
+                  </select>
+                  {errors.serviceNeeded && (
+                    <p className="text-red-400 text-sm flex items-center gap-1">
+                      <AlertCircle className="w-3 h-3" />
+                      {errors.serviceNeeded.message}
+                    </p>
+                  )}
+                </div>
+
+                {/* Budget & Timeline Row */}
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label
+                      htmlFor="budgetRange"
+                      className="text-sm font-medium text-zinc-300"
+                    >
+                      Budget Range
+                    </label>
+                    <select
+                      id="budgetRange"
+                      {...register("budgetRange")}
+                      className="w-full bg-zinc-800/50 border border-zinc-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
+                    >
+                      <option value="">Select...</option>
+                      <option value="<5k">&lt;$5K</option>
+                      <option value="5k-15k">$5K - $15K</option>
+                      <option value="15k-50k">$15K - $50K</option>
+                      <option value="50k+">$50K+</option>
+                      <option value="prefer-not-to-say">Prefer Not to Say</option>
+                    </select>
+                    {errors.budgetRange && (
+                      <p className="text-red-400 text-sm flex items-center gap-1">
+                        <AlertCircle className="w-3 h-3" />
+                        {errors.budgetRange.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <label
+                      htmlFor="timeline"
+                      className="text-sm font-medium text-zinc-300"
+                    >
+                      Timeline
+                    </label>
+                    <select
+                      id="timeline"
+                      {...register("timeline")}
+                      className="w-full bg-zinc-800/50 border border-zinc-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
+                    >
+                      <option value="">Select...</option>
+                      <option value="asap">ASAP</option>
+                      <option value="1-3-months">1 - 3 Months</option>
+                      <option value="3-6-months">3 - 6 Months</option>
+                      <option value="flexible">Flexible</option>
+                    </select>
+                    {errors.timeline && (
+                      <p className="text-red-400 text-sm flex items-center gap-1">
+                        <AlertCircle className="w-3 h-3" />
+                        {errors.timeline.message}
+                      </p>
+                    )}
+                  </div>
                 </div>
 
                 {/* Error Message */}
@@ -311,7 +398,7 @@ export default function ContactPage() {
                   {submitState === "loading" ? (
                     <>
                       <Sparkles className="w-5 h-5 animate-spin" />
-                      Sending to our Strategists...
+                      Sending...
                     </>
                   ) : (
                     <>
@@ -340,19 +427,19 @@ export default function ContactPage() {
             <div className="grid md:grid-cols-3 gap-8">
               {[
                 {
-                  title: "Human-Centric",
+                  title: "Full-Stack Delivery",
                   description:
-                    "We design around how your team actually works, not how spreadsheets think they should.",
+                    "From frontend to backend to cloud deployment — we handle the entire stack.",
                 },
                 {
-                  title: "Low-Friction",
+                  title: "Fast Turnaround",
                   description:
-                    "Implementation that doesn't disrupt your operations. We ship fast and clean.",
+                    "Agile sprints with weekly demos. You see progress, not just promises.",
                 },
                 {
-                  title: "Sustainable",
+                  title: "Post-Launch Support",
                   description:
-                    "Infrastructure that grows with you. No rewrites. No technical debt.",
+                    "We don't disappear after launch. Ongoing maintenance and feature development.",
                 },
               ].map((item) => (
                 <div key={item.title} className="text-center">
