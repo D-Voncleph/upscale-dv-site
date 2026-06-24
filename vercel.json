@@ -1,5 +1,12 @@
 {
     "framework": "nextjs",
-    "buildCommand": "next build",
-    "installCommand": "npm install"
+    "redirects": [
+        { "source": "/audit", "destination": "/contact", "permanent": true },
+        { "source": "/upscale-tool", "destination": "/contact", "permanent": true },
+        { "source": "/services/ai-automation", "destination": "/services/web-development", "permanent": true },
+        { "source": "/services/digital-construction", "destination": "/services/mobile-development", "permanent": true },
+        { "source": "/services/business-architecture", "destination": "/services/systems-architecture", "permanent": true },
+        { "source": "/labs", "destination": "/case-studies", "permanent": true },
+        { "source": "/manifesto", "destination": "/about", "permanent": true }
+    ]
 }
