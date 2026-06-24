@@ -10,16 +10,16 @@ import { usePathname } from "next/navigation";
 const navItems = [
     { href: "/", label: "Home" },
     { href: "/services", label: "Services" },
-    { href: "/labs", label: "Labs" },
-    { href: "/manifesto", label: "Manifesto" },
+    { href: "/case-studies", label: "Case Studies" },
+    { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },
-    { href: "/audit", label: "Audit", isCta: true },
+    { href: "/contact", label: "Book a Call", isCta: true },
 ];
 
 const servicesSubmenu = [
-    { href: "/services/ai-automation", label: "AI Automation" },
-    { href: "/services/digital-construction", label: "Digital Construction" },
-    { href: "/services/business-architecture", label: "Business Architecture" },
+    { href: "/services/web-development", label: "Web Development" },
+    { href: "/services/mobile-development", label: "Mobile & App Development" },
+    { href: "/services/systems-architecture", label: "Systems Architecture" },
 ];
 
 export function Navigation() {

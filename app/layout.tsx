@@ -10,8 +10,24 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-    title: "UPSCALE DV | Engineering Business Systems",
-    description: "UPSCALE DV engineers human-centric systems and AI-driven strategies that turn bottlenecks into breakthroughs.",
+    metadataBase: new URL('https://upscaledv.com'),
+    title: {
+        default: 'UPSCALE DV | Web & App Development',
+        template: '%s | UPSCALE DV',
+    },
+    description: 'UPSCALE DV designs and ships custom web applications, mobile apps, and cloud-native systems for businesses that refuse to stay small.',
+    openGraph: {
+        type: 'website',
+        locale: 'en_US',
+        url: 'https://upscaledv.com',
+        siteName: 'UPSCALE DV',
+        title: 'UPSCALE DV | Web & App Development',
+        description: 'Custom web apps, mobile apps, and cloud architecture.',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'UPSCALE DV | Web & App Development',
+    },
 };
 
 export default function RootLayout({

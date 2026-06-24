@@ -2,28 +2,29 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowUpRight, Linkedin } from "lucide-react";
+import { ArrowUpRight, Linkedin, Github } from "lucide-react";
 
 const footerLinks = {
     brand: {
-        description: "Engineering the infrastructure of growth.",
+        description: "Web & App Development. Systems Architecture.",
         social: [
             { icon: Linkedin, href: "https://linkedin.com/company/upscaledv", label: "LinkedIn" },
+            { icon: Github, href: "https://github.com/D-Voncleph", label: "GitHub" },
         ],
     },
     services: [
-        { label: "AI Automation", href: "/services/ai-automation" },
-        { label: "Digital Construction", href: "/services/digital-construction" },
-        { label: "Business Architecture", href: "/services/business-architecture" },
+        { label: "Web Development", href: "/services/web-development" },
+        { label: "Mobile & App Development", href: "/services/mobile-development" },
+        { label: "Systems Architecture", href: "/services/systems-architecture" },
     ],
     agency: [
-        { label: "Labs", href: "/labs" },
-        { label: "Manifesto", href: "/manifesto" },
+        { label: "Case Studies", href: "/case-studies" },
+        { label: "About", href: "/about" },
         { label: "Contact", href: "/contact" },
     ],
     legal: [
-        { label: "Privacy Policy", href: "#" },
-        { label: "Terms of Service", href: "#" },
+        { label: "Privacy Policy", href: "/privacy" },
+        { label: "Terms of Service", href: "/terms" },
     ],
 };
 
@@ -108,17 +109,17 @@ export function Footer() {
                         <ul className="space-y-3">
                             {footerLinks.legal.map((link) => (
                                 <li key={link.label}>
-                                    <a
+                                    <Link
                                         href={link.href}
                                         className="text-zinc-400 hover:text-electric-400 transition-colors text-sm"
                                     >
                                         {link.label}
-                                    </a>
+                                    </Link>
                                 </li>
                             ))}
                         </ul>
                         <div className="mt-8 p-4 rounded-xl bg-white/5 border border-white/5">
-                            <p className="text-sm text-zinc-400 mb-3">Ready to scale?</p>
+                            <p className="text-sm text-zinc-400 mb-3">Ready to build?</p>
                             <Link
                                 href="/contact"
                                 className="inline-flex items-center justify-center w-full px-4 py-2 bg-electric-400 text-charcoal-900 font-semibold rounded-lg hover:bg-electric-300 transition-colors"
@@ -135,7 +136,7 @@ export function Footer() {
                         &copy; {currentYear} UPSCALE DV. All rights reserved.
                     </p>
                     <p className="text-zinc-600 text-sm">
-                        Built in Public. Shipped from the Future.
+                        Crafted with precision. Powered by systems thinking.
                     </p>
                 </div>
             </div>

@@ -114,7 +114,7 @@ function HeroSection() {
                     <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 mb-8">
                         <Sparkles className="w-4 h-4 text-emerald-400" />
                         <span className="text-sm font-medium text-emerald-400">
-                            Engineering Business Systems
+                            Web & App Development
                         </span>
                     </motion.div>
 
@@ -122,17 +122,16 @@ function HeroSection() {
                         variants={itemVariants}
                         className="heading-display mb-8 tracking-tight"
                     >
-                        Growth isn&apos;t a goal. <br />
-                        <span className="text-gradient">It&apos;s infrastructure.</span>
+                        We Build Digital Products. <br />
+                        <span className="text-gradient">That Actually Scale.</span>
                     </motion.h1>
 
                     <motion.p
                         variants={itemVariants}
                         className="text-xl md:text-2xl text-zinc-400 max-w-3xl mx-auto mb-12 leading-relaxed"
                     >
-                        We engineer human-centric systems and AI-driven strategies that turn
-                        bottlenecks into breakthroughs. For enterprises and SMEs who refuse
-                        to compromise.
+                        Custom web applications, mobile apps, and cloud-native systems
+                        for businesses that refuse to stay small.
                     </motion.p>
 
                     <motion.div
@@ -140,22 +139,22 @@ function HeroSection() {
                         className="flex flex-col sm:flex-row gap-4 justify-center"
                     >
                         <Link
-                            href="/audit"
+                            href="/contact"
                             className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 bg-emerald-500 text-zinc-950 font-bold rounded-xl overflow-hidden"
                         >
                             {/* Button glow effect */}
                             <motion.div
                                 className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-cyan-400 opacity-0 group-hover:opacity-20 transition-opacity"
                             />
-                            <span className="relative z-10">Start Your Audit</span>
+                            <span className="relative z-10">Book Strategy Call</span>
                             <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1 relative z-10" />
                         </Link>
 
                         <Link
-                            href="/services"
+                            href="/case-studies"
                             className="inline-flex items-center justify-center gap-2 px-8 py-4 glass rounded-xl font-semibold hover:glass-hover transition-all"
                         >
-                            Explore Services
+                            See Our Work
                         </Link>
                     </motion.div>
                 </motion.div>
@@ -185,31 +184,31 @@ function ProblemSection() {
                     className="text-center mb-20"
                 >
                     <h2 className="text-3xl md:text-5xl font-bold mb-6">
-                        Your Business Isn&apos;t Broken. <br />
-                        <span className="text-zinc-500">Your Processes Are.</span>
+                        Your Idea Deserves Better. <br />
+                        <span className="text-zinc-500">Than a Template.</span>
                     </h2>
                     <p className="text-xl text-zinc-400 leading-relaxed">
-                        Most organizations aren&apos;t held back by market conditions or competition.
-                        They&apos;re strangled by legacy workflows, manual bottlenecks, and systems
-                        that scale linearly with effort.
+                        Most digital products fail not because the idea is bad, but because
+                        the tech behind them can&apos;t keep up. Slow sites, clunky apps, and
+                        fragile stacks that crumble under real traffic.
                     </p>
                 </motion.div>
 
                 <div className="grid md:grid-cols-3 gap-6">
                     {[
                         {
-                            title: "The Chaos Tax",
-                            description: "Every manual process compounds complexity. Your team spends more time managing the work than doing the work.",
+                            title: "The Template Trap",
+                            description: "Off-the-shelf templates look cheap, break on mobile, and can't be customised. Your brand deserves a site built from scratch.",
                             icon: Zap,
                         },
                         {
-                            title: "The Visibility Gap",
-                            description: "You can't optimize what you can't measure. Scattered data means scattered decisions.",
+                            title: "The App Gap",
+                            description: "Your competitors have custom apps. You're still emailing spreadsheets. That gap gets wider every quarter.",
                             icon: Globe,
                         },
                         {
                             title: "The Scale Ceiling",
-                            description: "Growth that requires proportional hiring isn't growth—it's just more work. There's a better way.",
+                            description: "Growth that breaks your infrastructure isn't growth — it's a ticking time bomb. Your stack needs to scale with you.",
                             icon: Shield,
                         },
                     ].map((item, index) => (
@@ -245,10 +244,10 @@ function SolutionSection() {
                     className="text-center mb-20"
                 >
                     <span className="text-emerald-400 font-medium tracking-wider uppercase text-sm">
-                        The Upscale Methodology
+                        How We Work
                     </span>
                     <h2 className="text-3xl md:text-5xl font-bold mt-4 mb-6">
-                        Human-Centric. Low-Friction. Sustainable.
+                        Clean Architecture. Performance First. Built to Last.
                     </h2>
                 </motion.div>
 
@@ -262,15 +261,15 @@ function SolutionSection() {
                     >
                         {[
                             {
-                                title: "Human-First Design",
-                                description: "We build systems around how people actually work, not how spreadsheets think they should.",
+                                title: "Clean Architecture",
+                                description: "We write code that humans can read, maintain, and extend. No spaghetti. No tech debt traps.",
                             },
                             {
-                                title: "Automation as Amplification",
-                                description: "AI should multiply your team's output, not replace your team's judgment.",
+                                title: "Performance First",
+                                description: "Every millisecond matters. We optimise for Core Web Vitals, fast loads, and smooth interactions.",
                             },
                             {
-                                title: "Sustainable Scale",
+                                title: "Built to Last",
                                 description: "Infrastructure that grows with you. No rewrites. No migrations. No chaos.",
                             },
                         ].map((item, index) => (
@@ -294,7 +293,7 @@ function SolutionSection() {
                         className="glass rounded-2xl p-8 border-emerald-500/20"
                     >
                         <div className="space-y-4">
-                            {["Identify", "Analyze", "Architect", "Implement", "Optimize"].map(
+                            {["Discover", "Design", "Build", "Deploy", "Support"].map(
                                 (step, index) => (
                                     <div
                                         key={step}
@@ -318,23 +317,23 @@ function SolutionSection() {
 function PillarsSection() {
     const pillars = [
         {
-            title: "Upscale Corporate",
-            description: "Strategic automation and efficiency audits for SMEs and Global Enterprises. We don't just fix processes; we re-engineer them for scale.",
-            href: "/services/business-architecture",
+            title: "Web Development",
+            description: "Custom websites and web applications built with Next.js, React, and TypeScript. Responsive, fast, and designed to convert visitors into customers.",
+            href: "/services/web-development",
             icon: Beaker,
             size: "col-span-12 md:col-span-6 lg:col-span-4",
         },
         {
-            title: "Upscale Professional",
-            description: "Personalized career architecture and digital literacy strategies for professionals ready to level up.",
-            href: "/services",
+            title: "Mobile & App Development",
+            description: "Cross-platform mobile apps with React Native. From MVP to app store deployment — one codebase, every platform.",
+            href: "/services/mobile-development",
             icon: Globe,
             size: "col-span-12 md:col-span-6 lg:col-span-4",
         },
         {
-            title: "Upscale Labs",
-            description: "Our innovation hub. Proprietary tools and experiments that push what's possible.",
-            href: "/labs",
+            title: "Systems Architecture",
+            description: "Cloud infrastructure, CI/CD pipelines, and DevOps automation. The invisible engine that keeps your products running at scale.",
+            href: "/services/systems-architecture",
             icon: Zap,
             size: "col-span-12 lg:col-span-4",
         },
@@ -349,7 +348,7 @@ function PillarsSection() {
                     viewport={{ once: true }}
                     className="text-3xl md:text-4xl font-bold mb-12 text-center"
                 >
-                    The Ecosystem
+                    What We Build
                 </motion.h2>
 
                 <div className="bento-grid">
@@ -599,24 +598,23 @@ function CTASection() {
 
                     <div className="relative z-10">
                         <h2 className="text-3xl md:text-5xl font-bold mb-6">
-                            Ready to systematize and scale?
+                            Ready to build your digital product?
                         </h2>
                         <p className="text-xl text-zinc-400 mb-10 max-w-2xl mx-auto">
-                            Let's identify your bottlenecks and build the infrastructure
-                            for sustainable growth.
+                            Let&apos;s architect your next web app, mobile app, or cloud system.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             <Link
-                                href="/audit"
+                                href="/contact"
                                 className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-emerald-500 text-zinc-950 font-bold rounded-xl hover:bg-emerald-400 transition-all"
                             >
-                                Start Free Audit
+                                Start a Project
                             </Link>
                             <Link
-                                href="/manifesto"
+                                href="/about"
                                 className="inline-flex items-center justify-center gap-2 px-8 py-4 glass rounded-xl font-semibold hover:glass-hover transition-all"
                             >
-                                Read Our Manifesto
+                                Learn About Us
                             </Link>
                         </div>
                     </div>
