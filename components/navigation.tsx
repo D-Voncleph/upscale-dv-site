@@ -10,16 +10,16 @@ import { usePathname } from "next/navigation";
 const navItems = [
     { href: "/", label: "Home" },
     { href: "/services", label: "Services" },
-    { href: "/labs", label: "Labs" },
-    { href: "/manifesto", label: "Manifesto" },
+    { href: "/case-studies", label: "Case Studies" },
+    { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },
-    { href: "/audit", label: "Audit", isCta: true },
+    { href: "/contact", label: "Book a Call", isCta: true },
 ];
 
 const servicesSubmenu = [
-    { href: "/services/ai-automation", label: "AI Automation" },
-    { href: "/services/digital-construction", label: "Digital Construction" },
-    { href: "/services/business-architecture", label: "Business Architecture" },
+    { href: "/services/web-development", label: "Web Development" },
+    { href: "/services/mobile-development", label: "Mobile & App Development" },
+    { href: "/services/systems-architecture", label: "Systems Architecture" },
 ];
 
 export function Navigation() {
@@ -76,7 +76,7 @@ export function Navigation() {
                             {navItems.map((item) =>
                                 item.isCta ? (
                                     <Link
-                                        key={item.href}
+                                        key={item.label}
                                         href={item.href}
                                         className="ml-2 px-5 py-2.5 bg-electric-400 text-charcoal-900 font-semibold rounded-lg hover:bg-electric-300 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all"
                                     >
@@ -84,7 +84,7 @@ export function Navigation() {
                                     </Link>
                                 ) : item.href === "/services" ? (
                                     <div
-                                        key={item.href}
+                                        key={item.label}
                                         className="relative"
                                         onMouseEnter={() => setIsServicesOpen(true)}
                                         onMouseLeave={() => setIsServicesOpen(false)}
@@ -128,7 +128,7 @@ export function Navigation() {
                                     </div>
                                 ) : (
                                     <Link
-                                        key={item.href}
+                                        key={item.label}
                                         href={item.href}
                                         className={`px-4 py-2 rounded-lg transition-colors ${
                                             pathname === item.href
@@ -171,14 +171,14 @@ export function Navigation() {
                             {navItems.map((item) =>
                                 item.isCta ? (
                                     <Link
-                                        key={item.href}
+                                        key={item.label}
                                         href={item.href}
                                         className="px-6 py-4 bg-electric-400 text-charcoal-900 font-bold rounded-xl text-center"
                                     >
                                         {item.label}
                                     </Link>
                                 ) : item.href === "/services" ? (
-                                    <div key={item.href} className="space-y-2">
+                                    <div key={item.label} className="space-y-2">
                                         <button
                                             onClick={() => setIsServicesOpen(!isServicesOpen)}
                                             className="flex items-center justify-between w-full px-4 py-3 text-gray-300"
@@ -213,7 +213,7 @@ export function Navigation() {
                                     </div>
                                 ) : (
                                     <Link
-                                        key={item.href}
+                                        key={item.label}
                                         href={item.href}
                                         className="px-4 py-3 text-gray-300 hover:text-electric-400 border-b border-white/5"
                                     >

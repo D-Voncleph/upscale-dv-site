@@ -12,16 +12,10 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:headed": "playwright test --headed",
-    "test:all": "npm run test && npm run test:e2e",
-    "test:plan": "npx tsx scripts/browser-tests.ts",
-    "test:browse": "npx tsx scripts/browser-tests.ts"
+    "test:all": "npm run test && npm run test:e2e"
   },
   "dependencies": {
-    "@ai-sdk/google": "^2.0.51",
-    "@ai-sdk/openai": "^2.0.88",
-    "@ai-sdk/react": "^2.0.118",
     "@hookform/resolvers": "^5.2.2",
-    "ai": "^5.0.116",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.26",
     "lucide-react": "^0.562.0",

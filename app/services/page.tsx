@@ -6,42 +6,42 @@ import Link from "next/link";
 
 const services = [
     {
-        title: "AI Automation",
-        description: "LLM integration, workflow optimization, and custom agent builds that multiply your team's output.",
-        icon: Cpu,
-        href: "/services/ai-automation",
-        features: ["Custom AI Agents", "Workflow Automation", "Integration Services"],
-    },
-    {
-        title: "Digital Construction",
-        description: "High-end web and application development using Vercel, Next.js, and modern frameworks.",
+        title: "Web Development",
+        description: "Custom websites and web applications built with Next.js 15, React 19, and TypeScript. Fast, responsive, and SEO-optimised.",
         icon: Globe,
-        href: "/services/digital-construction",
-        features: ["Web Applications", "Mobile Apps", "System Architecture"],
+        href: "/services/web-development",
+        features: ["Next.js & React Apps", "E-Commerce & SaaS", "Responsive Design"],
     },
     {
-        title: "Business Architecture",
-        description: "Eliminating bottlenecks through structural re-engineering and process optimization.",
+        title: "Mobile & App Development",
+        description: "Cross-platform mobile applications with React Native. One codebase, every platform, app store ready.",
+        icon: Cpu,
+        href: "/services/mobile-development",
+        features: ["React Native Apps", "Progressive Web Apps", "App Store Deployment"],
+    },
+    {
+        title: "Systems Architecture",
+        description: "Cloud infrastructure, CI/CD pipelines, and DevOps automation that keeps your products running at scale.",
         icon: Building2,
-        href: "/services/business-architecture",
-        features: ["Process Optimization", "Team Structuring", "Growth Strategy"],
+        href: "/services/systems-architecture",
+        features: ["Cloud Infrastructure", "CI/CD Pipelines", "Security & Monitoring"],
     },
 ];
 
 const capabilities = [
     {
-        title: "System Integration",
-        description: "Connect your existing tools into a cohesive workflow ecosystem.",
+        title: "API & System Integration",
+        description: "Connect payment gateways, CRMs, and third-party services into a seamless workflow.",
         icon: Layers,
     },
     {
         title: "Performance Engineering",
-        description: "Optimize every layer of your digital infrastructure for speed and scale.",
+        description: "Core Web Vitals optimisation, lazy loading, and edge caching for sub-second page loads.",
         icon: Zap,
     },
     {
-        title: "Strategic Consulting",
-        description: "Expert guidance on technology decisions and digital transformation.",
+        title: "Technical Consulting",
+        description: "Architecture reviews, tech stack selection, and hands-on guidance for your dev team.",
         icon: Target,
     },
 ];
@@ -73,8 +73,8 @@ export default function ServicesPage() {
                         transition={{ delay: 0.2 }}
                         className="text-xl text-zinc-400"
                     >
-                        We don't just build solutions. We engineer systems that scale
-                        with your ambition.
+                        We don&apos;t just build websites. We engineer digital products that
+                        scale with your ambition.
                     </motion.p>
                 </div>
             </section>
@@ -170,17 +170,16 @@ export default function ServicesPage() {
                         className="glass rounded-3xl p-12 md:p-16 text-center"
                     >
                         <h2 className="text-2xl md:text-3xl font-bold mb-4">
-                            Not sure where to start?
+                            Not sure which service you need?
                         </h2>
                         <p className="text-zinc-400 mb-8 max-w-xl mx-auto">
-                            Take our AI-powered audit to identify your biggest bottlenecks
-                            and get a customized roadmap.
+                            Let&apos;s talk about your project and find the right solution.
                         </p>
                         <Link
-                            href="/audit"
+                            href="/contact"
                             className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-emerald-500 text-zinc-950 font-bold rounded-xl hover:bg-emerald-400 transition-all"
                         >
-                            Start Free Audit
+                            Get Started
                         </Link>
                     </motion.div>
                 </div>
